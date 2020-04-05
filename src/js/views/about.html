@@ -3,8 +3,103 @@
  The Universal Permissive License (UPL), Version 1.0
  -->
 <div class="oj-hybrid-padding">
-  <h1>About Content Area</h1>
-  <div>
-      To change the content of this section, you will make edits to the about.html file located in the /js/views folder.
+  <h1 style="font-weight:bold;">Pokemon Data Table</h1>
+  <style>
+    body {
+      background-image: url("css/images/Poke.jpeg");
+      background-size: 120% 100%;
+    }
+
+    tbody tr:nth-child(odd) {
+      background-color: #FFF5EE;
+    }
+
+    html:not([dir="rtl"]) .oj-table-column-header-cell {
+      font-weight: bold;
+
+    }
+
+    table,
+    th,
+    td {
+      border: 1px solid black;
+    }
+  </style>
+
+  <div class="oj-flex-item oj-panel-alt2 oj-panel-alt2">
+    <div class="oj-flex-item">
+    </div>
+    <oj-bind-if test="[[itemSelected()]]">
+      <oj-chart type="pie" series="[[chartDataProvider]]" animation-on-display="auto" animation-on-data-change="auto"
+        hover-behavior="dim" style-defaults.three-d-effect="on" legend.position="end"
+        style="max-width: 400px;width:100%;height:350px;">
+      </oj-chart>
+    </oj-bind-if>
   </div>
+
+
+  <oj-table id='table' aria-label="Pokemon Table" data="[[dataProvider]]" accessibility.row-header="PokeId"
+    scroll-policy='loadMoreOnScroll' scroll-policy-options.fetch-size='3' selected.row="{{selectedItems}}"
+    on-selected-changed="{{selectionListener}}" selection-mode='[{"row": "multiple"}]' columns='[{ "headerTemplate": "headerCheckTemplate", "headerText":"Select All","template": "checkTemplate","sortable": "disabled"},
+            {"headerText": "Pokemon Id", "field": "PokeId"},
+            {"headerText": "Pokemon Name", "field": "PokeName"},
+			{"headerText": "Height", "field": "PokeHeight"},
+			{"headerText": "Weight", "field": "PokeWeight"},
+			{"headerText": "No. of Moves", "field": "PokeMoves"},
+			{"headerText": "Type(s)", "field": "PokeTypes"},
+			{"headerText": "Action", "template": "cellTemplate"}]'>
+    <template slot='rowTemplate'>
+      <tr>
+        <td>
+          <oj-bind-text value='[[PokeId]]'></oj-bind-text>
+        </td>
+        <td>
+          <oj-bind-text value='[[PokeName]]'></oj-bind-text>
+        </td>
+        <td>
+          <oj-bind-text value='[[PokeHeight]]'></oj-bind-text>
+        </td>
+        <td>
+          <oj-bind-text value='[[PokeWeight]]'></oj-bind-text>
+        </td>
+        <td>
+          <oj-bind-text value='[[PokeMoves]]'></oj-bind-text>
+        </td>
+        <td>
+          <oj-bind-text value='[[PokeTypes]]'></oj-bind-text>
+        </td>
+      </tr>
+    </template>
+    <template slot="headerCheckTemplate">
+      <oj-checkboxset value='[[headerCheckStatus]]' on-value-changed='[[headerCheckboxListener]]'
+        class='oj-checkboxset-no-chrome oj-selection-checkbox' id="table_header_checkbox">
+        <oj-option aria-label="Checkbox Select All" value="checked"></oj-option>
+      </oj-checkboxset>
+    </template>
+    <template slot="checkTemplate" data-oj-as="cell">
+      <oj-checkboxset value='[[handleCheckbox(cell.key)]]' on-value-changed='[[checkboxListener]]'
+        class='oj-checkboxset-no-chrome oj-selection-checkbox' :id="[['table_checkboxset' + cell.key]]"
+        :data-row-key="{{cell.row.PokeId}}">
+        <oj-option :id="[['table_checkbox' + cell.key]]" aria-label="[['Checkbox Select Row ' + cell.row.PokeId]]"
+          value="checked"></oj-option>
+      </oj-checkboxset>
+    </template>
+    <template slot="cellTemplate" data-oj-as="cell">
+      <oj-button :data-row-key="{{cell.row.PokeId}}" :id="[['createButton' + cell.key]]"
+        on-oj-action="[[showCreateDialog]]">View</oj-button>
+    </template>
+    <oj-dialog id="createDialog" style="display:none" dialog-title="Additional Data">
+      <div slot="body">
+        <oj-label-value label-edge="top">
+          <oj-input-text slot="value" id="viewCurrent" readonly="true"></oj-input-text>
+        </oj-label-value>
+        <img src='[[imagepoke]]' alt="W3Schools.com" style="width:104px;height:142px;" style="vertical-align:middle" />
+      </div>
+      <div slot="footer">
+        <oj-button id="closeBtn" on-oj-action="[[closeItem]]">Close</oj-button>
+      </div>
+    </oj-dialog>
+
+
+  </oj-table>
 </div>
