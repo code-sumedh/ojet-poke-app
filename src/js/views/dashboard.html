@@ -3,7 +3,7 @@
  The Universal Permissive License (UPL), Version 1.0
  -->
  <div class="oj-hybrid-padding">
-  <h1 style="font-weight:bold;" >Pokemon Data Table</h1>
+  <h3 style="font-weight:bold;" >Pokemon Data Table</h3>
    <style>
     body {
       background-image: url("css/images/PokeBackground.svg");
@@ -27,16 +27,16 @@
       <div class="oj-flex-item oj-sm-12 oj-md-8">
 
   <oj-table id='table' aria-label="Pokemon Table" data="[[dataProvider]]" accessibility.row-header="PokeId"
-    scroll-policy='loadMoreOnScroll' scroll-policy-options.fetch-size='3' selected.row="{{selectedItems}}"
+    scroll-policy='loadMoreOnScroll' scroll-policy-options.fetch-size='3' selected.row="{{selectedItems}}" dnd='{"reorder": {"columns": "enabled"}}'
     on-selected-changed="{{selectionListener}}" selection-mode='[{"row": "multiple"}]' 
-	columns='[{ "headerTemplate": "headerCheckTemplate", "headerText":"Select All","template": "checkTemplate","sortable": "disabled"},
-            {"headerText": "Pokemon Id", "field": "PokeId"},
-            {"headerText": "Pokemon Name", "field": "PokeName"},
-			{"headerText": "Height", "field": "PokeHeight"},
-			{"headerText": "Weight", "field": "PokeWeight"},
-			{"headerText": "No. of Moves", "field": "PokeMoves"},
-			{"headerText": "Type(s)", "field": "PokeTypes"},
-			{"headerText": "Action", "template": "cellTemplate"}]'>
+	columns='[{ "headerTemplate": "headerCheckTemplate", "headerText":"Select All","template": "checkTemplate","sortable": "disabled", "resizable": "enabled"},
+            {"headerText": "Pokemon Id", "field": "PokeId", "resizable": "enabled", "headerClassName": "oj-sm-only-hide", "className": "oj-sm-only-hide"},
+            {"headerText": "Pokemon Name", "field": "PokeName", "resizable": "enabled"},
+			{"headerText": "Height", "field": "PokeHeight", "resizable": "enabled", "headerClassName": "oj-sm-only-hide", "className": "oj-sm-only-hide"},
+			{"headerText": "Weight", "field": "PokeWeight", "resizable": "enabled", "headerClassName": "oj-sm-only-hide", "className": "oj-sm-only-hide"},
+			{"headerText": "No. of Moves", "field": "PokeMoves", "resizable": "enabled", "headerClassName": "oj-sm-only-hide", "className": "oj-sm-only-hide"},
+			{"headerText": "Type(s)", "field": "PokeTypes", "resizable": "enabled"},
+			{"headerText": "Action", "template": "cellTemplate", "resizable": "enabled", "headerClassName": "oj-sm-only-hide", "className": "oj-sm-only-hide"}]'>
     <template slot='rowTemplate'>
       <tr>
         <td>
